@@ -1,0 +1,33 @@
+# Render Blueprint — Docker required (Render has no native Java runtime)
+# https://render.com/docs/docker — JVM languages must use Docker
+
+services:
+  - type: web
+    name: medicore-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    branch: development_v1
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: "4110"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_USERNAME
+        sync: false
+      - key: DATABASE_PASSWORD
+        sync: false
+      - key: CORS_ORIGIN
+        value: https://medicore-health-mm.vercel.app
+      - key: APP_URL
+        value: https://medicore-health-mm.vercel.app
+      - key: VAPID_PUBLIC_KEY
+        sync: false
+      - key: VAPID_PRIVATE_KEY
+        sync: false
+      - key: VAPID_SUBJECT
+        value: mailto:care@medicore.local
